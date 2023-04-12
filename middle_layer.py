@@ -2,7 +2,14 @@ from fastapi import FastAPI, File, UploadFile
 import shutil
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+app.add_middleware(GZipMiddleware)
 
 @app.post("/files")
 async def UploadImage(file: UploadFile = File(...)):
